@@ -1,0 +1,8 @@
+{
+	"name": "@gramio/init-data",
+	"version": "0.0.1",
+	"exports": "./src/index.ts",
+	"publish": {
+		"include": ["deno.json", "src", "README.md", "LICENSE"]
+	}
+}
