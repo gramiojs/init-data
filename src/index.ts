@@ -75,23 +75,15 @@ export function parseInitData(query: string): WebAppInitData {
 }
 
 export function validateInitData(webAppInitData: string, token: string) {
-	const { hash, authDate, ...data } = Object.fromEntries(
+	const { hash, ...data } = Object.fromEntries(
 		new URLSearchParams(webAppInitData),
 	);
 
-	const sortedData = Object.keys(data)
+	const dataCheckString = Object.keys(data)
 		.sort()
-		.reduce(
-			(acc, key) => {
-				acc[key] = data[key];
-				return acc;
-			},
-			{} as Record<string, string>,
-		);
-
-	const dataCheckString = Object.entries(sortedData)
-		.map(([key, value]) => `${key}=${value}`)
+		.map((key) => `${key}=${data[key]}`)
 		.join("\n");
+
 
 	const secretKey = createHmac("sha256", "WebAppData").update(token).digest();
 

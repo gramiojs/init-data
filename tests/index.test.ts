@@ -5,6 +5,7 @@ import {
 	validateInitData,
 } from "../src";
 
+
 const nowDate = Date.now();
 
 const queryString =
