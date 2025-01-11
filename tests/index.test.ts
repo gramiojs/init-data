@@ -11,7 +11,7 @@ const nowDate = Date.now();
 const queryString =
 	"user=%7B%22id%22%3A617580375%2C%22first_name%22%3A%22kravets%22%2C%22last_name%22%3A%22%22%2C%22username%22%3A%22noname2544%22%2C%22language_code%22%3A%22ru%22%2C%22is_premium%22%3Atrue%2C%22allows_write_to_pm%22%3Atrue%7D&chat_instance=-431068947458840694&chat_type=private&auth_date=1723409203&hash=5854de54c66e52cba3e438dd61658406c9f0216d8c783f9e9af80f514692273b";
 
-const secretToken = process.env.TOKEN;
+const secretToken = process.env.BOT_TOKEN;
 if (!secretToken) throw new Error("Please provide Token for tests");
 
 const initDataString = new URLSearchParams({

@@ -1,19 +1,16 @@
 import { createHmac } from "node:crypto";
-import type { Optional, WebAppChatType, WebAppInitData } from "./types";
+import type { Optional, WebAppChatType, WebAppInitData } from "./types.ts";
+
+function parseJSON<T>(value: string | null): T | undefined {
+	return value ? JSON.parse(value) : undefined;
+  }
 
 export function parseInitData(query: string): WebAppInitData {
 	const searchParams = new URLSearchParams(query);
 
-	const userData = searchParams.get("user");
-	const userParsedData = userData ? JSON.parse(userData) : undefined;
-
-	const receiverData = searchParams.get("receiver");
-	const receiverParsedData = receiverData
-		? JSON.parse(receiverData)
-		: undefined;
-
-	const chatData = searchParams.get("chat");
-	const chatParsedData = chatData ? JSON.parse(chatData) : undefined;
+	const userParsedData = parseJSON(searchParams.get("user"));
+	const receiverParsedData = parseJSON(searchParams.get("receiver"));
+	const chatParsedData = parseJSON(searchParams.get("chat"));
 
 	const optionalData = {
 		queryId: searchParams.get("query_id") ?? undefined,
@@ -40,7 +37,7 @@ export function parseInitData(query: string): WebAppInitData {
 					isPremium: receiverParsedData.is_premium,
 					addedToAttachmentMenu: receiverParsedData.added_to_attachment_menu,
 					allowsWriteToPm: receiverParsedData.allows_write_to_pm,
-					photoUrl: receiverParsedData.photoUrl,
+					photoUrl: receiverParsedData.photo_url,
 					isBot: receiverParsedData.is_bot,
 				}
 			: undefined,
