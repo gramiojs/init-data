@@ -9,7 +9,10 @@
 		"type": "git",
 		"url": "git+https://github.com/gramiojs/init-data"
 	},
-	"author": { "url": "https://github.com/kravetsone", "name": "kravets" },
+	"author": {
+		"url": "https://github.com/kravetsone",
+		"name": "kravets"
+	},
 	"main": "./dist/index.cjs",
 	"module": "./dist/index.js",
 	"types": "./dist/index.d.ts",
@@ -31,6 +34,7 @@
 	"license": "MIT",
 	"devDependencies": {
 		"@types/bun": "latest",
+		"mitata": "^1.0.21",
 		"pkgroll": "^2.4.2",
 		"typescript": "^5.0.0"
 	}
