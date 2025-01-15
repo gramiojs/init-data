@@ -20,9 +20,10 @@ export const sha256Hash = IS_BUN
 export function parseInitData(query: string): WebAppInitData {
 	const searchParams = new URLSearchParams(query);
 
-	const userParsedData = parseJSON(searchParams.get("user"));
-	const receiverParsedData = parseJSON(searchParams.get("receiver"));
-	const chatParsedData = parseJSON(searchParams.get("chat"));
+	// TODO: replace any. maybe remove cast to camelCase
+	const userParsedData = parseJSON<any>(searchParams.get("user"));
+	const receiverParsedData = parseJSON<any>(searchParams.get("receiver"));
+	const chatParsedData = parseJSON<any>(searchParams.get("chat"));
 
 	const optionalData = {
 		queryId: searchParams.get("query_id") ?? undefined,
