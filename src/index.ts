@@ -1,6 +1,5 @@
 import { createHmac, type BinaryToTextEncoding } from "node:crypto";
 import type { Optional, WebAppChatType, WebAppInitData } from "./types.ts";
-import type { DigestEncoding } from "bun";
 
 export * from "./types.ts";
 
@@ -13,7 +12,7 @@ const IS_BUN = typeof Bun !== "undefined";
 export const sha256Hash = IS_BUN
 		? (hmacKey: string, input: string, encoding?: BinaryToTextEncoding) =>
 			// TODO: find a better way. for now, cast - solve overloading
-			new Bun.CryptoHasher("sha256", hmacKey).update(input).digest(encoding as DigestEncoding)
+			new Bun.CryptoHasher("sha256", hmacKey).update(input).digest(encoding as "hex")
 	: (hmacKey: string, input: string, encoding?: BinaryToTextEncoding) =>
 			createHmac("sha256", hmacKey).update(input).digest(encoding as BinaryToTextEncoding);
 
