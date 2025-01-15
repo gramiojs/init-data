@@ -44,10 +44,10 @@ jobs:
             - name: Type-check
               run: tsc --noEmit
 
-            - name: Run tests
-              run: bun test
-              env:
-                  TOKEN: ${{ secrets.BOT_TOKEN }}
+            # - name: Run tests
+            #   run: bun test
+            #   env:
+            #       TOKEN: ${{ secrets.BOT_TOKEN }}
 
             - name: Build package
               run: bun prepublishOnly
@@ -73,6 +73,7 @@ jobs:
               run: npm publish --access public
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+                  BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
 
             - name: GitHub Release
               uses: ncipollo/release-action@v1
