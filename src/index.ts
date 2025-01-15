@@ -27,7 +27,7 @@ export function parseInitData(query: string): WebAppInitData {
 					isPremium: userParsedData.is_premium,
 					addedToAttachmentMenu: userParsedData.added_to_attachment_menu,
 					allowsWriteToPm: userParsedData.allows_write_to_pm,
-					photoUrl: userParsedData.photoUrl,
+					photoUrl: userParsedData.photo_url,
 					languageCode: userParsedData.language_code,
 				}
 			: undefined,
@@ -40,7 +40,7 @@ export function parseInitData(query: string): WebAppInitData {
 					isPremium: receiverParsedData.is_premium,
 					addedToAttachmentMenu: receiverParsedData.added_to_attachment_menu,
 					allowsWriteToPm: receiverParsedData.allows_write_to_pm,
-					photoUrl: receiverParsedData.photoUrl,
+					photoUrl: receiverParsedData.photo_url,
 					isBot: receiverParsedData.is_bot,
 				}
 			: undefined,
