@@ -1,4 +1,4 @@
-import type { WebAppInitData, WebAppChatType, Optional } from "../src/types";
+import type { WebAppInitData, WebAppChatType, Optional } from "../src/types.ts";
 
 export function parseInitDataV1(query: string): WebAppInitData {
 	const searchParams = new URLSearchParams(query);
@@ -75,7 +75,7 @@ export function parseInitDataV1(query: string): WebAppInitData {
 
 
 import { bench, run, summary } from "mitata";
-import { parseInitData, validateAndParseInitData, validateInitData } from "../src";
+import { parseInitData, validateAndParseInitData, validateInitData } from "../src/index.ts";
 
 
 const queryString =

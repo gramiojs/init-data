@@ -1,6 +1,6 @@
 
 import { bench, run, summary } from "mitata";
-import { parseInitData, validateAndParseInitData, validateInitData } from "../src";
+import { parseInitData, validateAndParseInitData, validateInitData } from "../src/index.ts";
 
 
 const queryString =

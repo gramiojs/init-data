@@ -3,7 +3,7 @@ import {
 	parseInitData,
 	validateAndParseInitData,
 	validateInitData,
-} from "../src";
+} from "../src/index.ts";
 
 
 const nowDate = Date.now();
