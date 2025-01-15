@@ -1,6 +1,8 @@
 import { createHmac } from "node:crypto";
 import type { Optional, WebAppChatType, WebAppInitData } from "./types.ts";
 
+export * from "./types.ts";
+
 function parseJSON<T>(value: string | null): T | undefined {
 	return value ? JSON.parse(value) : undefined;
   }
@@ -24,7 +26,7 @@ export function parseInitData(query: string): WebAppInitData {
 					isPremium: userParsedData.is_premium,
 					addedToAttachmentMenu: userParsedData.added_to_attachment_menu,
 					allowsWriteToPm: userParsedData.allows_write_to_pm,
-					photoUrl: userParsedData.photoUrl,
+					photoUrl: userParsedData.photo_url,
 					languageCode: userParsedData.language_code,
 				}
 			: undefined,
