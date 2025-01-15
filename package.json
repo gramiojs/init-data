@@ -1,13 +1,13 @@
 {
 	"name": "@gramio/init-data",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"description": "server-side parser for telegram init-data",
 	"keywords": ["gramio", "telegram", "init-data", "tma", "webapp"],
 	"homepage": "https://github.com/gramiojs/init-data",
 	"readme": "https://github.com/gramiojs/init-data",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/gramiojs/init-data"
+		"url": "git+https://github.com/gramiojs/init-data.git"
 	},
 	"author": {
 		"url": "https://github.com/kravetsone",
@@ -33,7 +33,7 @@
 	"files": ["dist"],
 	"license": "MIT",
 	"devDependencies": {
-		"@types/bun": "latest",
+		"@types/bun": "^1.1.14",
 		"mitata": "^1.0.21",
 		"pkgroll": "^2.4.2",
 		"typescript": "^5.0.0"
