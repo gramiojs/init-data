@@ -1,6 +1,6 @@
 {
 	"name": "@gramio/init-data",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "server-side parser for telegram init-data",
 	"keywords": ["gramio", "telegram", "init-data", "tma", "webapp"],
 	"homepage": "https://github.com/gramiojs/init-data",
