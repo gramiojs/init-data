@@ -1,20 +1,10 @@
-import { createHmac, type BinaryToTextEncoding } from "node:crypto";
+
 import type { Optional, WebAppChatType, WebAppInitData } from "./types.ts";
+import { getBotTokenSecretKey, parseJSON, sha256Hash } from "./utils.ts";
 
 export * from "./types.ts";
+export * from "./utils.ts";
 
-function parseJSON<T>(value: string | null): T | undefined {
-	return value ? JSON.parse(value) : undefined;
-}
-
-const IS_BUN = typeof Bun !== "undefined";
-
-export const sha256Hash = IS_BUN
-		? (hmacKey: string, input: string, encoding?: BinaryToTextEncoding) =>
-			// TODO: find a better way. for now, cast - solve overloading
-			new Bun.CryptoHasher("sha256", hmacKey).update(input).digest(encoding as "hex")
-	: (hmacKey: string, input: string, encoding?: BinaryToTextEncoding) =>
-			createHmac("sha256", hmacKey).update(input).digest(encoding as BinaryToTextEncoding);
 
 export function parseInitData(query: string): WebAppInitData {
 	const searchParams = new URLSearchParams(query);
@@ -95,7 +85,7 @@ export function validateInitData(webAppInitData: string, token: string) {
 
 
 	// TODO: add possibility to precompile this
-	const secretKey = sha256Hash("WebAppData", token);
+	const secretKey = token.includes(":") ? getBotTokenSecretKey(token) : token;
 
 	const calculatedHash = sha256Hash(secretKey, dataCheckString, "hex");
 

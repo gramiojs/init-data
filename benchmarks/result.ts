@@ -1,6 +1,6 @@
 
-import { bench, run, summary } from "mitata";
-import { parseInitData, validateAndParseInitData, validateInitData } from "../src/index.ts";
+import { bench, do_not_optimize, run, summary } from "mitata";
+import { parseInitData, validateAndParseInitData, validateInitData, getBotTokenSecretKey } from "../src/index.ts";
 
 
 const queryString =
@@ -9,16 +9,24 @@ const queryString =
 const secretToken = process.env.BOT_TOKEN;
 if (!secretToken) throw new Error("Please provide Token for bench");
 
+const secretKey = getBotTokenSecretKey(secretToken);
+
 summary(() => {
 	bench("validateAndParseInitData", () => {
-		validateAndParseInitData(queryString, secretToken);
+		do_not_optimize(validateAndParseInitData(queryString, secretToken));
+	});
+	bench("validateAndParseInitData with secretKey", () => {
+		do_not_optimize(validateAndParseInitData(queryString, secretKey));
 	});
 
 	bench("validateInitData", () => {
-		validateInitData(queryString, secretToken);
+		do_not_optimize(validateInitData(queryString, secretToken));
+	});
+	bench("validateInitData with secretKey", () => {
+		do_not_optimize(validateInitData(queryString, secretKey));
 	});
     bench("parseInitData", () => {
-		parseInitData(queryString);
+		do_not_optimize(parseInitData(queryString));
 	});
 });
 
@@ -26,35 +34,53 @@ await run();
 
 
 // !NODE
-// node benchmarks/rusha-vs-native.mjs
-// clk: ~3.99 GHz
+// bunx tsx --env-file .env  .\benchmarks\result.ts
+// clk: ~3.83 GHz
 // cpu: AMD Ryzen 7 7700 8-Core Processor
-// runtime: node 22.11.0 (x64-linux)
+// runtime: node 22.10.0 (x64-win32)
 
 // benchmark                   avg (min … max) p75   p99    (min … top 1%)
 // ------------------------------------------- -------------------------------
-// _hash with rusha              12.10 µs/iter   7.25 µs █
-//                         (4.66 µs … 1.27 ms) 116.62 µs █▄▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-// _hash with native            547.04 ns/iter 435.45 ns █
-//                       (370.08 ns … 3.61 µs)   3.58 µs █▃▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+// validateAndParseInitData       9.91 µs/iter   9.20 µs  █
+//                         (8.60 µs … 1.69 ms)  16.10 µs ▃█▄▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+// validateAndParseInitData w..   7.81 µs/iter   7.84 µs         █
+//                         (7.64 µs … 8.08 µs)   7.96 µs █▁▁▁▁▁▁▅██▅▁▅█▁▁▁▁▅▁▅
+// validateInitData               7.02 µs/iter   7.11 µs █  █       █ █  █    
+//                         (6.81 µs … 7.31 µs)   7.19 µs ██▁█▁▁█▁█▁████▁▁█▁███
+// validateInitData with secr..   5.09 µs/iter   5.14 µs             ▄   █▄ ▄ 
+//                         (4.80 µs … 5.22 µs)   5.19 µs ▅▁▁▁▁▅▅▁▁▁▅▁██████▅██
+// parseInitData                  2.51 µs/iter   2.52 µs  ▄█
+//                         (2.45 µs … 2.69 µs)   2.67 µs ▅███▄▇▆▄▁▂▆▂▂▄▂▁▂▂▂▁▂
 
 // summary
-//   _hash with native
-//    22.12x faster than _hash with rusha
+//   parseInitData
+//    2.03x faster than validateInitData with secretKey
+//    2.8x faster than validateInitData
+//    3.11x faster than validateAndParseInitData with secretKey
+//    3.95x faster than validateAndParseInitData
 
 // !BUN
-// bun benchmarks/rusha-vs-native.mjs 
-// clk: ~5.04 GHz
+// bun .\benchmarks\result.ts     
+// clk: ~3.44 GHz
 // cpu: AMD Ryzen 7 7700 8-Core Processor
-// runtime: bun 1.1.37 (x64-linux)
+// runtime: bun 1.2.5 (x64-win32)
 
 // benchmark                   avg (min … max) p75   p99    (min … top 1%)
 // ------------------------------------------- -------------------------------
-// _hash with rusha              10.00 µs/iter   4.96 µs  █
-//                         (2.60 µs … 2.78 ms)  45.85 µs ▂█▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
-// _hash with native            471.82 ns/iter 420.00 ns █
-//                     (370.00 ns … 949.79 µs)   1.99 µs █▆▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+// validateAndParseInitData       9.89 µs/iter  10.11 µs        █        █   █
+//                        (9.39 µs … 10.41 µs)  10.16 µs █▁█▁█▁▁█▁▁▁▁▁▁▁▁██▁██
+// validateAndParseInitData w..   9.78 µs/iter  10.02 µs   █  ▃      ▃        
+//                        (9.33 µs … 10.72 µs)  10.49 µs ▆▆█▁▁█▆▁▁▁▆▁█▁▁▁▁▁▁▁▆
+// validateInitData               6.32 µs/iter   6.45 µs   █▂    ▂
+//                         (5.99 µs … 7.17 µs)   7.16 µs ▇▄██▄▄▁▄█▁▄▄▁▁▁▁▁▁▁▁▄
+// validateInitData with secr..   5.83 µs/iter   5.84 µs  ▃    █
+//                         (5.56 µs … 6.99 µs)   6.45 µs ▄██▆▄▄█▆▁▄▁▁▁▁▁▁▁▁▁▁▄
+// parseInitData                  3.56 µs/iter   3.69 µs  ▄▂▂ █    ▂
+//                         (3.34 µs … 4.22 µs)   4.06 µs ▅███▅█▃▃▃▅█▅▅▁▃▁▁▁▁▁▃
 
 // summary
-//   _hash with native
-//    21.19x faster than _hash with rusha
+//   parseInitData
+//    1.64x faster than validateInitData with secretKey
+//    1.77x faster than validateInitData
+//    2.74x faster than validateAndParseInitData with secretKey
+//    2.77x faster than validateAndParseInitData

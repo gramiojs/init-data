@@ -3,6 +3,7 @@ import {
 	parseInitData,
 	validateAndParseInitData,
 	validateInitData,
+	getBotTokenSecretKey,
 } from "../src/index.ts";
 
 
@@ -74,5 +75,17 @@ describe("", () => {
 				username: "noname2544",
 			},
 		});
+	});
+
+	test("getBotTokenSecretKey()", () => {
+		const secretKey = getBotTokenSecretKey(secretToken);
+	});
+
+	test("validateInitData() with secretKey", () => {
+		const secretKey = getBotTokenSecretKey(secretToken);
+
+		const result = validateInitData(queryString, secretKey);
+
+		expect(result).toBe(true);
 	});
 });
