@@ -19,11 +19,11 @@ export type WebAppUser<isReceiver extends boolean = false> = {
 	/**
 	 * First name of the user or bot.
 	 */
-	firstName: string;
+	first_name: string;
 	/**
 	 * Last name of the user or bot.
 	 */
-	lastName?: string;
+	last_name?: string;
 	/**
 	 * Username of the user or bot.
 	 */
@@ -31,21 +31,21 @@ export type WebAppUser<isReceiver extends boolean = false> = {
 	/**
 	 * True, if this user is a Telegram Premium user.
 	 */
-	isPremium?: boolean;
+	is_premium?: boolean;
 	/**
 	 * True, if this user added the bot to the attachment menu.
 	 */
-	addedToAttachmentMenu?: boolean;
+	added_to_attachment_menu?: boolean;
 	/**
 	 * True, if this user allowed the bot to message them.
 	 */
-	allowsWriteToPm?: boolean;
+	allows_write_to_pm?: boolean;
 
 	/**
 	 * URL of the user’s profile photo. The photo can be in .jpeg or .svg
 	 * formats. Only returned for Mini Apps launched from the attachment menu.
 	 */
-	photoUrl?: string;
+	photo_url?: string;
 } & (isReceiver extends true
 	? {
 			/**
@@ -58,7 +58,7 @@ export type WebAppUser<isReceiver extends boolean = false> = {
 			 * [IETF language tag](https://en.wikipedia.org/wiki/IETF_language_tag) of the user's language.
 			 * Returns in {@link WebAppInitData.user} field only.
 			 */
-			languageCode?: string;
+			language_code?: string;
 		});
 
 /**
@@ -85,7 +85,7 @@ export interface WebAppChat {
 	 * URL of the chat’s photo. The photo can be in .jpeg or .svg formats.
 	 * Only returned for Mini Apps launched from the attachment menu.
 	 */
-	photoUrl?: string;
+	photo_url?: string;
 }
 
 /**
@@ -96,7 +96,7 @@ export interface WebAppInitData {
 	 * A unique identifier for the Mini App session, required for sending
 	 * messages via the [answerWebAppQuery](https://core.telegram.org/bots/api#answerwebappquery) method.
 	 */
-	queryId?: string;
+	query_id?: string;
 	/**
 	 * An object containing data about the current user.
 	 */
@@ -116,26 +116,26 @@ export interface WebAppInitData {
 	/**
 	 * Type of the chat from which the Mini App was opened.
 	 */
-	chatType?: WebAppChatType;
+	chat_type?: WebAppChatType;
 	/**
 	 * A global identifier indicating the chat from which Mini App was opened. Returned only for
 	 * applications opened by direct link.
 	 */
-	chatInstance?: string;
+	chat_instance?: string;
 	/**
 	 * The value of the `startattach` parameter, passed [via link](https://core.telegram.org/bots/webapps#adding-bots-to-the-attachment-menu). Only returned for Mini Apps when launched from the attachment menu via link.
 	 *
 	 * The value of the `start_param` parameter will also be passed in the GET-parameter `tgWebAppStartParam`, so the Mini App can load the correct interface right away.
 	 */
-	startParam?: string;
+	start_param?: string;
 	/**
 	 * Time in seconds, after which a message can be sent via the [answerWebAppQuery](https://core.telegram.org/bots/api#answerwebappquery) method.
 	 */
-	canSendAfter?: number;
+	can_send_after?: number;
 	/**
 	 * Unix time when the form was opened.
 	 */
-	authDate: number;
+	auth_date: number;
 
 	/**
 	 * A hash of all passed parameters, which the bot server can use to
