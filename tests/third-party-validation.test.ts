@@ -58,14 +58,14 @@ describe.todo("validateInitDataThirdParty", () => {
 		const result = await validateInitDataThirdParty(validInitData, botId);
 
 		expect(result).toEqual({
-			authDate: FIXED_DATE,
-			queryId: "AAHdF_E4AAAAANwX8ThV_J1d",
+			auth_date: FIXED_DATE,
+			query_id: "AAHdF_E4AAAAANwX8ThV_J1d",
 			user: {
 				id: 123456789,
-				firstName: "Test",
-				lastName: "User",
+				first_name: "Test",
+				last_name: "User",
 				username: "testuser",
-				languageCode: "en",
+				language_code: "en",
 			},
 			hash: expect.any(String),
 		});
