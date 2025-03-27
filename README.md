@@ -18,10 +18,10 @@ import {
 const initData = "?user=...";
 const BOT_TOKEN = "12312312:ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+// For optimal performance, pre-compute the secret key
 const secretKey = getBotTokenSecretKey(BOT_TOKEN);
 
 const result = validateAndParseInitData(initData, secretKey);
-// you can just pass BOT_TOKEN but it will be slower because it will hash this token every time
 
 if (!result) {
     console.error("init data is invalid");
@@ -32,6 +32,34 @@ const parsedButUnsafe = parseInitData(initData);
 ```
 
 Result is the same as in the [official docs - WebAppInitData](https://core.telegram.org/bots/webapps#webappinitdata).
+
+## Signing Init Data
+
+Generate valid initData strings for testing and etc.
+
+### Basic Usage
+
+```typescript
+import { signInitData } from "@gramio/init-data";
+
+// Sign from existing parsed object
+const validInitData = signInitData(
+    {
+        user: {
+            id: 12345,
+            first_name: "Signed",
+            username: "signed_user",
+        },
+    },
+    BOT_TOKEN
+);
+
+// Sign from raw query string
+const validInitData = signInitData(
+    "auth_date=123456789&user=%7B%22id%22%3A12345%7D",
+    BOT_TOKEN
+);
+```
 
 ### TODO:
 

@@ -1,11 +1,10 @@
 import { describe, expect, it, test } from "bun:test";
 import {
+	getBotTokenSecretKey,
 	parseInitData,
 	validateAndParseInitData,
 	validateInitData,
-	getBotTokenSecretKey,
 } from "../src/index.ts";
-
 
 const nowDate = Date.now();
 
@@ -32,13 +31,13 @@ describe("", () => {
 		console.log(data);
 
 		expect(data).toEqual({
-			queryId: "1",
+			query_id: "1",
 			user: {
 				id: 1,
-				firstName: "Durov",
-				languageCode: "ru",
+				first_name: "Durov",
+				language_code: "ru",
 			},
-			authDate: nowDate,
+			auth_date: nowDate,
 			hash: "some",
 		});
 	});
@@ -61,17 +60,17 @@ describe("", () => {
 
 		expect(result).not.toBe(false);
 		expect(result).toEqual({
-			authDate: 1723409203,
-			chatInstance: "-431068947458840694",
-			chatType: "private",
+			auth_date: 1723409203,
+			chat_instance: "-431068947458840694",
+			chat_type: "private",
 			hash: "5854de54c66e52cba3e438dd61658406c9f0216d8c783f9e9af80f514692273b",
 			user: {
 				id: 617580375,
-				firstName: "kravets",
-				allowsWriteToPm: true,
-				isPremium: true,
-				languageCode: "ru",
-				lastName: "",
+				first_name: "kravets",
+				allows_write_to_pm: true,
+				is_premium: true,
+				language_code: "ru",
+				last_name: "",
 				username: "noname2544",
 			},
 		});
@@ -79,6 +78,9 @@ describe("", () => {
 
 	test("getBotTokenSecretKey()", () => {
 		const secretKey = getBotTokenSecretKey(secretToken);
+
+		console.log(typeof secretKey);
+		expect(secretKey).toBeInstanceOf(Buffer);
 	});
 
 	test("validateInitData() with secretKey", () => {
