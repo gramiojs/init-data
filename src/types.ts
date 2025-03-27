@@ -147,3 +147,8 @@ export interface WebAppInitData {
 export type Optional<T> = {
 	[P in keyof T]: T[P] | undefined;
 };
+
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
+	Partial<Pick<T, K>>;
+
+
