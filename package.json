@@ -1,46 +1,38 @@
 {
-  "name": "@gramio/init-data",
-  "version": "0.0.2",
-  "description": "server-side parser for telegram init-data",
-  "keywords": [
-    "gramio",
-    "telegram",
-    "init-data",
-    "tma",
-    "webapp"
-  ],
-  "homepage": "https://github.com/gramiojs/init-data",
-  "readme": "https://github.com/gramiojs/init-data",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gramiojs/init-data.git"
-  },
-  "author": {
-    "url": "https://github.com/kravetsone",
-    "name": "kravets"
-  },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    "import": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    },
-    "require": {
-      "types": "./dist/index.d.cts",
-      "default": "./dist/index.cjs"
-    }
-  },
-  "scripts": {
-    "prepublishOnly": "bunx pkgroll"
-  },
-  "type": "module",
-  "files": [
-    "dist"
-  ],
-  "license": "MIT",
-  "devDependencies": {
-    "@biomejs/biome": "^1.9.4"
-  }
+	"name": "@gramio/init-data",
+	"version": "0.0.3",
+	"description": "server-side parser for telegram init-data",
+	"keywords": ["gramio", "telegram", "init-data", "tma", "webapp"],
+	"homepage": "https://github.com/gramiojs/init-data",
+	"readme": "https://github.com/gramiojs/init-data",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/gramiojs/init-data.git"
+	},
+	"author": {
+		"url": "https://github.com/kravetsone",
+		"name": "kravets"
+	},
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		"import": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		},
+		"require": {
+			"types": "./dist/index.d.cts",
+			"default": "./dist/index.cjs"
+		}
+	},
+	"scripts": {
+		"prepublishOnly": "bunx pkgroll"
+	},
+	"type": "module",
+	"files": ["dist"],
+	"license": "MIT",
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4"
+	}
 }

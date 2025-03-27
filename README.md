@@ -12,23 +12,29 @@ import {
     validateAndParseInitData,
     validateInitData,
     parseInitData,
+    getBotTokenSecretKey,
 } from "@gramio/init-data";
 
 const initData = "?user=...";
 const BOT_TOKEN = "12312312:ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-const result = validateAndParseInitData(initData, BOT_TOKEN);
+const secretKey = getBotTokenSecretKey(BOT_TOKEN);
+
+const result = validateAndParseInitData(initData, secretKey);
+// you can just pass BOT_TOKEN but it will be slower because it will hash this token every time
 
 if (!result) {
     console.error("init data is invalid");
 } else console.log(result);
 
-const isValid = validateInitData(initData, BOT_TOKEN);
+const isValid = validateInitData(initData, secretKey);
 const parsedButUnsafe = parseInitData(initData);
 ```
 
+Result is the same as in the [official docs - WebAppInitData](https://core.telegram.org/bots/webapps#webappinitdata).
+
 ### TODO:
 
--   Better types
 -   Better throw error on invalid data
+-   Throw error on old auth_date
 -   Optimize
