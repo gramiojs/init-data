@@ -91,3 +91,9 @@ describe("", () => {
 		expect(result).toBe(true);
 	});
 });
+
+test("getBotTokenSecretKey returns Buffer", () => {
+	const secretKey = getBotTokenSecretKey(secretToken);
+
+	expect(secretKey).toBeInstanceOf(Buffer);
+});

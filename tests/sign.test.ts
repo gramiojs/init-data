@@ -56,4 +56,8 @@ describe("object input handling", () => {
 		expect(isValid).toBeTrue();
 		expect(signed).toBeString();
 	});
+
+	it("should sign parsed object input", () => {
+		
+	})
 });

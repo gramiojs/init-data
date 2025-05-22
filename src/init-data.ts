@@ -42,7 +42,10 @@ export function parseInitData(query: string): WebAppInitData {
 	return optionalData;
 }
 
-export function validateInitData(webAppInitData: string, token: string) {
+export function validateInitData(
+	webAppInitData: string,
+	token: string | Buffer,
+) {
 	const { hash, ...data } = Object.fromEntries(
 		new URLSearchParams(webAppInitData),
 	);
@@ -53,7 +56,8 @@ export function validateInitData(webAppInitData: string, token: string) {
 		.join("\n");
 
 	// TODO: add possibility to precompile this
-	const secretKey = token.includes(":") ? getBotTokenSecretKey(token) : token;
+	const secretKey =
+		typeof token === "string" ? getBotTokenSecretKey(token) : token;
 
 	const calculatedHash = sha256Hash(secretKey, dataCheckString, "hex");
 
