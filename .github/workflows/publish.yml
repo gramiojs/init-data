@@ -37,6 +37,8 @@ jobs:
 
             - name: Install modules
               run: bun install && bun test
+              env:
+                  BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
 
             - name: Prepare to JSR publish
               run: bun scripts/prepare-jsr.ts
