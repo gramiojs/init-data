@@ -67,7 +67,10 @@ export function validateInitData(
 }
 
 // TODO: prevent double URLSearchParams
-export function validateAndParseInitData(query: string, token: string) {
+export function validateAndParseInitData(
+	query: string,
+	token: string | Buffer,
+) {
 	const result = validateInitData(query, token);
 
 	if (!result) return false;

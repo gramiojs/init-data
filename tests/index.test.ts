@@ -90,6 +90,29 @@ describe("", () => {
 
 		expect(result).toBe(true);
 	});
+
+	test("validateAndParseInitData() with secretKey", () => {
+		const secretKey = getBotTokenSecretKey(secretToken);
+
+		const result = validateAndParseInitData(queryString, secretKey);
+
+		expect(result).not.toBe(false);
+		expect(result).toEqual({
+			auth_date: 1723409203,
+			chat_instance: "-431068947458840694",
+			chat_type: "private",
+			hash: "5854de54c66e52cba3e438dd61658406c9f0216d8c783f9e9af80f514692273b",
+			user: {
+				id: 617580375,
+				first_name: "kravets",
+				allows_write_to_pm: true,
+				is_premium: true,
+				language_code: "ru",
+				last_name: "",
+				username: "noname2544",
+			},
+		});
+	});
 });
 
 test("getBotTokenSecretKey returns Buffer", () => {
