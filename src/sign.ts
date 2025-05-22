@@ -5,7 +5,10 @@ import {
 	sha256Hash,
 } from "./utils.ts";
 
-function calculateHash(params: URLSearchParams, secretKey: string): string {
+function calculateHash(
+	params: URLSearchParams,
+	secretKey: string | Buffer,
+): string {
 	const dataCheckString = Array.from(params)
 		.sort(([a], [b]) => a.localeCompare(b))
 		.map(([key, value]) => `${key}=${value}`)
@@ -16,19 +19,20 @@ function calculateHash(params: URLSearchParams, secretKey: string): string {
 
 export function signInitData(
 	initData: string,
-	secretKeyOrToken: string,
+	secretKeyOrToken: string | Buffer,
 ): string;
 export function signInitData(
 	initData: MakeOptional<WebAppInitData, "hash" | "auth_date">,
-	secretKeyOrToken: string,
+	secretKeyOrToken: string | Buffer,
 ): string;
 export function signInitData(
 	initData: string | MakeOptional<WebAppInitData, "hash" | "auth_date">,
-	secretKeyOrToken: string,
+	secretKeyOrToken: string | Buffer,
 ) {
-	const secretKey = secretKeyOrToken.includes(":")
-		? getBotTokenSecretKey(secretKeyOrToken)
-		: secretKeyOrToken;
+	const secretKey =
+		typeof secretKeyOrToken === "string"
+			? getBotTokenSecretKey(secretKeyOrToken)
+			: secretKeyOrToken;
 
 	if (typeof initData !== "string") {
 		const searchParams = serializeInitData(initData);

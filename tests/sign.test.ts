@@ -1,4 +1,5 @@
 import {
+	getBotTokenSecretKey,
 	parseInitData,
 	serializeInitData,
 	signInitData,
@@ -8,6 +9,7 @@ import {
 import { describe, expect, it } from "bun:test";
 
 const BOT_TOKEN = "12312312:ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const BOT_TOKEN_KEY = getBotTokenSecretKey(BOT_TOKEN);
 
 describe("object input handling", () => {
 	it("should sign parsed object input", () => {
@@ -57,7 +59,24 @@ describe("object input handling", () => {
 		expect(signed).toBeString();
 	});
 
-	it("should sign parsed object input", () => {
-		
-	})
+	it("should sign parsed object input with buffer getBotTokenSecretKey", () => {
+		const unsignedObject = {
+			auth_date: Math.floor(Date.now() / 1000),
+			user: {
+				id: 123,
+				first_name: "Object",
+				last_name: "User",
+				username: "object_user",
+			},
+		};
+
+		const signedObject = signInitData(unsignedObject, BOT_TOKEN_KEY);
+		const isValid = validateInitData(signedObject, BOT_TOKEN_KEY);
+		const parsed = parseInitData(signedObject);
+
+		expect(isValid).toBeTrue();
+		expect(parsed.hash).toBeString();
+		console.log(parsed);
+		expect(parsed).toMatchObject(unsignedObject);
+	});
 });
